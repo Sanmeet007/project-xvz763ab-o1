@@ -9,3 +9,10 @@ An AI-powered prescription assistant that helps users understand medical prescri
 ```env
 GEMINI_API_KEY=<YOUR KEY>
 ```
+
+
+## Server Starting command :
+
+```bash
+uvicorn app.main:app --reload
+```
