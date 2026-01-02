@@ -1,10 +1,11 @@
 {
-  "functions": {
-    "server.py": {
-      "runtime": "python3.14"
-    }
-  },
-  "routes": [
-    { "src": "/(.*)", "dest": "server.py" }
-  ]
+    "functions": {
+        "server.py": {}
+    },
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "server.py"
+        }
+    ]
 }
