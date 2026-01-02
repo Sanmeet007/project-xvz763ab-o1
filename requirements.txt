@@ -8,3 +8,4 @@ google-generativeai
 google-ai-generativelanguage
 langchain-core
 langgraph
+pymysql
