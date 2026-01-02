@@ -1,7 +1,11 @@
 {
-    "functions": {
-        "server.py": {}
-    },
+    "version": 2,
+    "builds": [
+        {
+            "src": "server.py",
+            "use": "@vercel/python"
+        }
+    ],
     "routes": [
         {
             "src": "/(.*)",
