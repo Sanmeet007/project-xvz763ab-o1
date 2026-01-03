@@ -8,5 +8,5 @@ google-generativeai
 google-ai-generativelanguage
 langchain-core
 langgraph
-pymysql
+psycopg2-binary
 pydantic[email]

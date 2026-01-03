@@ -16,3 +16,6 @@ GEMINI_API_KEY=<YOUR KEY>
 ```bash
 uvicorn app.main:app --reload
 ```
+
+<!-- PostgreSQL 17.7 -->
+<!-- Python version 3.12 -->
