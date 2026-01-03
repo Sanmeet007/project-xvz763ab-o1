@@ -4,8 +4,11 @@ from app.schemas.auth import SignupRequest, LoginRequest
 from app.db.models import User, Token
 from app.api.deps import get_db, get_current_user
 from app.core.security import hash_password, verify_password, generate_token
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
+security = HTTPBearer()
 router = APIRouter(prefix="/api", tags=["Auth"])
+
 
 @router.post("/signup")
 def signup(payload: SignupRequest, db: Session = Depends(get_db)):
@@ -28,10 +31,11 @@ def signup(payload: SignupRequest, db: Session = Depends(get_db)):
 
     return {"error": False, "access_token": token_value}
 
+
 @router.post("/login")
 def login(payload: LoginRequest, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.email == payload.email).first()
-    if not user or not verify_password(payload.password, user.password): # type: ignore
+    if not user or not verify_password(payload.password, user.password):  # type: ignore
         raise HTTPException(status_code=400, detail="Invalid credentials")
 
     token_value = generate_token()
@@ -39,6 +43,26 @@ def login(payload: LoginRequest, db: Session = Depends(get_db)):
     db.commit()
 
     return {"error": False, "access_token": token_value}
+
+
+@router.post("/logout")
+def logout(
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    db: Session = Depends(get_db),
+):
+    token_value = credentials.credentials
+
+    deleted = db.query(Token).filter(Token.token == token_value).delete()
+    db.commit()
+
+    if not deleted:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+    return {
+        "error": False,
+        "message": "Logged out successfully",
+    }
+
 
 @router.get("/me")
 def me(user=Depends(get_current_user)):
