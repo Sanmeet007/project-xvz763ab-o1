@@ -11,6 +11,12 @@ class User(Base):
     password = Column(String(255), nullable=False)
     is_active = Column(Boolean, default=True)
 
+    full_name = Column(String(255), nullable=True)
+    bio = Column(String(1024), nullable=True)
+    specialization = Column(String(255), nullable=True)
+    phone = Column(String(32), nullable=True)
+    image_url = Column(String(512), nullable=True)
+
 class Token(Base):
     __tablename__ = "tokens"
 
